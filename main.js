@@ -216,7 +216,7 @@ $.ajax({
               //Change color of text selected
               switch (selectedTime) {
                 case "Last week":
-                  $("#interval_week").css("background-color","#1F3549") && $("#interval_week").css("color","white") && $("#interval_week").css("margin-top","-8px") ;
+                  $("#interval_week").css("background-color","#1F3549") && $("#interval_week").css("color","white") && $("#interval_week").css("margin-top","-5px") ;
                   break;
                 case "Last month":
                   $("#interval_month").css("background-color","#1F3549") && $("#interval_month").css("color","white");
