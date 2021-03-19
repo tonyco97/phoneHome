@@ -126,21 +126,16 @@ var geoJsons = [];
 var globalInstallations = 0;
 //call phoneHome Api to retrieve country installation
 $.ajax({
-  url:
-    "https://www.nethserver.org/phone-home/index.php?method=get_info&interval=7",
+  url: "https://www.nethserver.org/phone-home/index.php",
   type: "GET",
-  // url: "https://" + server_ip + "/phone-home/index.php",
-  // type: "GET",
-  // data: "method=get_info&interval=" + interval,
+  data: "method=get_info&interval=" + interval,
   success: function (resp) {
-    // parseInstallations("controlla", resp);
-  },
-  error: function (installations) {
-    installations = apiResp;
+    //Get response from Api
+    var installations = resp;
     //Get geoJson
-    $.getJSON("./map/countries2.geojson", function (geoJson) {
+    $.getJSON("./map/layer.geojson", function (geoJson) {
       //get countryCodes
-      $.getJSON("./map/countries.json", function (countryCodes) {
+      $.getJSON("./map/coordinates.json", function (countryCodes) {
         //loop installations
         for (var i in installations) {
           var installation = installations[i];
@@ -216,20 +211,33 @@ $.ajax({
               //Change color of text selected
               switch (selectedTime) {
                 case "Last week":
-                  $("#interval_week").css("background-color","#1F3549") && $("#interval_week").css("color","white") && $("#interval_week").css("margin-top","-5px") ;
+                  $("#interval_week").css("background-color", "#1F3549") &&
+                    $("#interval_week").css("color", "white") &&
+                    $("#interval_week").css("margin-top", "-5px");
                   break;
                 case "Last month":
-                  $("#interval_month").css("background-color","#1F3549") && $("#interval_month").css("color","white");
+                  $("#interval_month").css("background-color", "#1F3549") &&
+                    $("#interval_month").css("color", "white");
                   break;
                 case "Last 6 months":
-                  $("#interval_6months").css("background-color","#1F3549") && $("#interval_6months").css("color","white");
+                  $("#interval_6months").css("background-color", "#1F3549") &&
+                    $("#interval_6months").css("color", "white");
                   break;
                 case "Last year":
-                  $("#interval_year").css("background-color","#1F3549") && $("#interval_year").css("color","white") && $("#interval_year").css("margin-bottom","-8px") ;
+                  $("#interval_year").css("background-color", "#1F3549") &&
+                    $("#interval_year").css("color", "white") &&
+                    $("#interval_year").css("margin-bottom", "-8px");
                   break;
                 case "All":
-                  $("#interval_all").css("background-color","#1F3549") && $("#interval_all").css("color","white") && $("#interval_all").css("margin-top","-8px") && $("#interval_all").css("margin-bottom","-8px")
-                  && $("#interval_all").css("border-bottom-left-radius","4px") && $("#interval_all").css("border-bottom-right-radius","4px");
+                  $("#interval_all").css("background-color", "#1F3549") &&
+                    $("#interval_all").css("color", "white") &&
+                    $("#interval_all").css("margin-top", "-8px") &&
+                    $("#interval_all").css("margin-bottom", "-8px") &&
+                    $("#interval_all").css(
+                      "border-bottom-left-radius",
+                      "4px"
+                    ) &&
+                    $("#interval_all").css("border-bottom-right-radius", "4px");
                   break;
                 default:
                   break;
@@ -241,5 +249,8 @@ $.ajax({
         }
       });
     });
+  },
+  error: function (errResp) {
+    console.error(errResp);
   },
 });

@@ -253,4 +253,5 @@ input[type="radio"] {
   border-width: 0;
   height: 50px;
   width: auto;
+  font-weight: bold;
 }
