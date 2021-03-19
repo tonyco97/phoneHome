@@ -9,7 +9,7 @@ function getCoordinates(obj, countryCode) {
     }
   }
 }
-
+//Get the center of every Country 
 function getCentroide(obj, countryCode) {
   if (countryCode == "") {
     return null;
@@ -21,11 +21,10 @@ function getCentroide(obj, countryCode) {
     }
   }
 }
-
+//Get the number and the versions of installation
 function getNethserverInstallation(installations, countryName) {
   var versions = [];
   var splittedI = installations.split(",");
-
   splittedI.sort();
   for (i in splittedI) {
     var splittedV = splittedI[i].split("#");
@@ -38,50 +37,6 @@ function getNethserverInstallation(installations, countryName) {
   }
   return versions;
 }
-//import a specif icon for the marker with a determinate size
-icon = {
-  icon: "bus",
-  iconShape: "marker",
-  isAlphaNumericIcon: true,
-  text: "",
-  borderColor: "#00ABDC",
-  textColor: "#00ABDC",
-  iconSize: [22, 26],
-};
-document.getElementById("interval_week").addEventListener("click", function () {
-  var interval_menu = document.getElementById("current_interval");
-  interval_menu.innerHTML = "Last week";
-  refresh_interval();
-});
-
-document
-  .getElementById("interval_month")
-  .addEventListener("click", function () {
-    var interval_menu = document.getElementById("current_interval");
-    interval_menu.innerHTML = "Last month";
-    refresh_interval();
-  });
-
-document
-  .getElementById("interval_6months")
-  .addEventListener("click", function () {
-    var interval_menu = document.getElementById("current_interval");
-    interval_menu.innerHTML = "Last 6 months";
-    refresh_interval();
-  });
-
-document.getElementById("interval_year").addEventListener("click", function () {
-  var interval_menu = document.getElementById("current_interval");
-  interval_menu.innerHTML = "Last year";
-  refresh_interval();
-});
-
-document.getElementById("interval_all").addEventListener("click", function () {
-  var interval_menu = document.getElementById("current_interval");
-  interval_menu.innerHTML = "All";
-  refresh_interval();
-});
-
 //color of the map border
 function style(feature) {
   return {
@@ -92,3 +47,60 @@ function style(feature) {
     fillOpacity: 0.7,
   };
 }
+//import a specif icon for the marker with a determinate size
+icon = {
+  iconShape: "marker",
+  isAlphaNumericIcon: true,
+  text: "",
+  iconSize: [22, 26],
+};
+//Define determinate period of time
+var interval;
+var interval_menu = document.getElementById("current_interval");
+var interval = sessionStorage.getItem("interval_value");
+if (interval == "7") interval_menu.innerHTML = "Last week";
+else if (interval == "30") interval_menu.innerHTML = "Last month";
+else if (interval == "180") interval_menu.innerHTML = "Last 6 months";
+else if (interval == "365") interval_menu.innerHTML = "Last year";
+else if (interval == "1") interval_menu.innerHTML = "All";
+function refresh_interval() {
+  var interval_menu = document.getElementById("current_interval");
+  var toStore = 0;
+  if (interval_menu.innerHTML == "Last week") toStore = 7;
+  else if (interval_menu.innerHTML == "Last month") toStore = 30;
+  else if (interval_menu.innerHTML == "Last 6 months") toStore = 180;
+  else if (interval_menu.innerHTML == "Last year") toStore = 365;
+  else if (interval_menu.innerHTML == "All") toStore = 1;
+  sessionStorage.setItem("interval_value", toStore);
+  location.reload();
+}
+//Refresh the page in order to the specific choose
+document.getElementById("interval_week").addEventListener("click", function () {
+  var interval_menu = document.getElementById("current_interval");
+  interval_menu.innerHTML = "Last week";
+  refresh_interval();
+});
+document
+  .getElementById("interval_month")
+  .addEventListener("click", function () {
+    var interval_menu = document.getElementById("current_interval");
+    interval_menu.innerHTML = "Last month";
+    refresh_interval();
+  });
+document
+  .getElementById("interval_6months")
+  .addEventListener("click", function () {
+    var interval_menu = document.getElementById("current_interval");
+    interval_menu.innerHTML = "Last 6 months";
+    refresh_interval();
+  });
+document.getElementById("interval_year").addEventListener("click", function () {
+  var interval_menu = document.getElementById("current_interval");
+  interval_menu.innerHTML = "Last year";
+  refresh_interval();
+});
+document.getElementById("interval_all").addEventListener("click", function () {
+  var interval_menu = document.getElementById("current_interval");
+  interval_menu.innerHTML = "All";
+  refresh_interval();
+});
