@@ -24,6 +24,9 @@ body {
   -o-transition: 1s -o-filter linear;
   transition: 1s filter linear, 1s -webkit-filter linear;
 }
+.current_interval{
+  visibility: hidden;
+}
 .loader {
   font-size: 60;
   left: 0%;
@@ -31,8 +34,10 @@ body {
   margin-left: -4em;
   z-index: 13;
   margin: 50px auto;
-  animation: spinner .6s linear infinite;
   border-bottom-color: #368CBD !important;
+}
+.loader:after{
+  animation: spinner .6s linear infinite;
 }
 @keyframes loader{
   to {transform: rotate(360deg);}
@@ -126,18 +131,18 @@ a.dropdown-item.is-active{
   border: none;
 }
 .leaflet-touch .leaflet-bar a:first-child {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   color: #2793da;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 .leaflet-touch .leaflet-bar a:last-child {
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
   color: #2793da;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 .leaflet-top,
 .leaflet-bottom {
