@@ -7,14 +7,14 @@ $("#totalUnity").hide();
 var basemaps = {
   Default: L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 5,
-    minZoom: 2,
+    minZoom: 1,
     id: "OpenStreet",
   }),
   Dark: L.tileLayer(
     "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
     {
       maxZoom: 5,
-      minZoom: 2,
+      minZoom: 1,
       id: "MapID",
     }
   ),
@@ -22,13 +22,13 @@ var basemaps = {
     "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
     {
       maxZoom: 5,
-      minZoom: 2,
+      minZoom: 1,
       id: "MapID",
     }
   ),
   Detailed: L.tileLayer("https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}", {
     maxZoom: 5,
-    minZoom: 2,
+    minZoom: 1,
     id: "MapID",
   }),
 };
@@ -37,7 +37,7 @@ var mapOptions = {
   zoomControl: false,
   attributionControl: false,
   center: [27.9027835, 17.4963655],
-  zoom: 3,
+  zoom: 1.5,
   layers: [basemaps.Default],
 };
 //Render Main Map
@@ -115,8 +115,8 @@ var themeControl = L.control
   })
   .addTo(map);
 //Lock size of the map
-var southWest = L.latLng(-82.98155760646617, -100),
-  northEast = L.latLng(90.99346179538875, 100);
+var southWest = L.latLng(-82.98155760646617, -99999),
+  northEast = L.latLng(90.99346179538875, 99999);
 var bounds = L.latLngBounds(southWest, northEast);
 map.setMaxBounds(bounds);
 map.on("drag", function () {
@@ -126,7 +126,7 @@ var geoJsons = [];
 var globalInstallations = 0;
 //call phoneHome Api to retrieve country installation
 $.ajax({
-  url: "https://www.nethserver.org/phone-home/index.php",
+  url: "https://phonehome.nethserver.org/index.php",
   type: "GET",
   data: "method=get_info&interval=" + interval,
   success: function (resp) {
