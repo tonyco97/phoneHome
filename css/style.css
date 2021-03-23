@@ -193,6 +193,16 @@ element.style {
   pointer-events: none;
   margin-left: 1200;
 }
+.leaflet-bottom .leaflet-control {
+  margin-bottom: 12px;
+}
+/* hide the zoom button at the charghing of the page  */
+.leaflet-control-zoom {
+  visibility: hidden;
+}
+.leaflet-control-layers-toggle {
+visibility: hidden;
+}
 .leaflet-bottom {
   bottom: -9px;
 }

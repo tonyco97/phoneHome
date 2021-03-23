@@ -109,7 +109,7 @@ L.control
   .addTo(map);
 //Render Layer Control & Move to Sidebar
 var themeControl = L.control
-  .layers(basemaps, overlays, {
+  .layers(basemaps, overlays, { 
     position: "topright",
     collapsed: true,
   })
@@ -206,6 +206,8 @@ $.ajax({
               $("#map").css("filter", "blur(0px)");
               $("#button").show();
               $("#totalUnity").show();
+              $(".leaflet-control-zoom").css("visibility","visible");
+              $(".leaflet-control-layers-toggle").css("visibility","visible");
               //Check wich currency of time is selected
               var selectedTime = $("#current_interval").text();
               //Change color of text selected
