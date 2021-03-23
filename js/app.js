@@ -109,7 +109,7 @@ L.control
   .addTo(map);
 //Render Layer Control & Move to Sidebar
 var themeControl = L.control
-  .layers(basemaps, overlays, { 
+  .layers(basemaps, overlays, {
     position: "topright",
     collapsed: true,
   })
@@ -181,13 +181,15 @@ $.ajax({
                 ("</b></td></tr>");
                 //Check the total number of the installations
                 totalInstallations += parseInt(installationsNumber);
-                globalInstallations += totalInstallations;
               }
+              globalInstallations += totalInstallations;
               if (totalInstallations >= 1000) {
                 totalInstallations =
                   Math.floor(totalInstallations / 1000).toString() + "k";
               }
               marker.options.icon.options.text = totalInstallations;
+              //Show the unity total
+              $("#totalUnity").text(globalInstallations.toString());
               //Create the marker body
               content +=
                 '<table class="table  is-hoverable">' +
@@ -206,8 +208,8 @@ $.ajax({
               $("#map").css("filter", "blur(0px)");
               $("#button").show();
               $("#totalUnity").show();
-              $(".leaflet-control-zoom").css("visibility","visible");
-              $(".leaflet-control-layers-toggle").css("visibility","visible");
+              $(".leaflet-control-zoom").css("visibility", "visible");
+              $(".leaflet-control-layers-toggle").css("visibility", "visible");
               //Check wich currency of time is selected
               var selectedTime = $("#current_interval").text();
               //Change color of text selected
@@ -246,8 +248,6 @@ $.ajax({
               }
             }
           }
-          //Show the unity total
-          $("#totalUnity").text(globalInstallations.toString());
         }
       });
     });
