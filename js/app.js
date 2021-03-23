@@ -133,9 +133,9 @@ $.ajax({
     //Get response from Api
     var installations = resp;
     //Get geoJson
-    $.getJSON("./map/layer.geojson", function (geoJson) {
+    $.getJSON("./js/map/layer.geojson", function (geoJson) {
       //get countryCodes
-      $.getJSON("./map/coordinates.json", function (countryCodes) {
+      $.getJSON("./js/map/coordinates.json", function (countryCodes) {
         //loop installations
         for (var i in installations) {
           var installation = installations[i];
