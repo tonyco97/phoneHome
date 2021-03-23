@@ -203,6 +203,9 @@ element.style {
 .leaflet-control-layers-toggle {
 visibility: hidden;
 }
+.leaflet-control-zoom-in{
+  margin-bottom:1px;
+}
 .leaflet-bottom {
   bottom: -9px;
 }

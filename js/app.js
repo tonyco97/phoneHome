@@ -185,7 +185,7 @@ $.ajax({
               globalInstallations += totalInstallations;
               if (totalInstallations >= 1000) {
                 totalInstallations =
-                  Math.floor(totalInstallations / 1000).toString() + "k";
+                  Math.floor(totalInstallations / 1000).toString() + "K";
               }
               marker.options.icon.options.text = totalInstallations;
               //Show the unity total
