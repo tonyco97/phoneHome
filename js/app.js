@@ -133,124 +133,123 @@ $.ajax({
     //Get response from Api
     var installations = resp;
     //Get geoJson
-    $.getJSON("./js/map/layer.geojson", function (geoJson) {
-      //get countryCodes
-      $.getJSON("./js/map/coordinates.json", function (countryCodes) {
-        //loop installations
-        for (var i in installations) {
-          var installation = installations[i];
-          //get geojson coordinates
-          var coordinates = getCoordinates(geoJson, installation.country_code);
-          //get centroide of marker
-          var centroide = getCentroide(countryCodes, installation.country_code);
-          // //get installations of country
-          var nethserverInstallations = getNethserverInstallation(
-            installation.installations,
-            installation.country_name
-          );
-          //draw elements: draw layer
-          if (coordinates) {
-            var geo = L.geoJson(coordinates, {
-              style: style,
-            }).addTo(map);
-            geoJsons.push(geo);
-          }
-          //draw elements: draw marker
-          if (centroide) {
-            var marker = L.marker(centroide, {
-              icon: L.BeautifyIcon.icon(icon),
-            });
-          }
-          //draw elemensts: draw popup
-          if (nethserverInstallations.length > 0) {
-            if (marker) {
-              var content = "";
-              var textMarker = "";
-              var totalInstallations = 0;
+    // $.getJSON("./js/map/layer.json", function (geoJson) {
+    var geoJson = LAYER;
+    //get countryCodes
+    // $.getJSON("./js/map/coordinates.json", function (countryCodes) {
+      var countryCodes = COORDINATES;
+      //loop installations
+      for (var i in installations) {
+        var installation = installations[i];
+        //get geojson coordinates
+        var coordinates = getCoordinates(geoJson, installation.country_code);
+        //get centroide of marker
+        var centroide = getCentroide(countryCodes, installation.country_code);
+        // //get installations of country
+        var nethserverInstallations = getNethserverInstallation(
+          installation.installations,
+          installation.country_name
+        );
+        //draw elements: draw layer
+        if (coordinates) {
+          var geo = L.geoJson(coordinates, {
+            style: style,
+          }).addTo(map);
+          geoJsons.push(geo);
+        }
+        //draw elements: draw marker
+        if (centroide) {
+          var marker = L.marker(centroide, {
+            icon: L.BeautifyIcon.icon(icon),
+          });
+        }
+        //draw elemensts: draw popup
+        if (nethserverInstallations.length > 0) {
+          if (marker) {
+            var content = "";
+            var textMarker = "";
+            var totalInstallations = 0;
 
-              for (var i in nethserverInstallations) {
-                //Create all the variable that will be showed in the marker
-                installationsNumber = nethserverInstallations[i].number;
-                versionsInstallation = nethserverInstallations[i].version;
-                countryName = nethserverInstallations[i].countryN;
-                textMarker +=
-                  "<tr><td><b>" +
-                  versionsInstallation +
-                  "</b></td><td><b>" +
-                  installationsNumber;
-                ("</b></td></tr>");
-                //Check the total number of the installations
-                totalInstallations += parseInt(installationsNumber);
-              }
-              globalInstallations += totalInstallations;
-              if (totalInstallations >= 1000) {
-                totalInstallations =
-                  Math.floor(totalInstallations / 1000).toString() + "K";
-              }
-              marker.options.icon.options.text = totalInstallations;
-              //Show the unity total
-              $("#totalUnity").text(globalInstallations.toString());
-              //Create the marker body
-              content +=
-                '<table class="table  is-hoverable">' +
-                '<thead><tr><th style="background-color: white; color: black; font-size: 12; border-radius:4px; border-color: transparent; " colspan="2";>' +
-                countryName +
-                "</th></tr></thead>" +
-                "<tbody><tr><th>Release</th><th>Installations</th></tr></tbody>" +
-                textMarker +
-                "</table>" +
-                "</div>" +
-                "</div>";
-              var txt = `${content}`;
-              marker.addTo(map).bindPopup(txt);
-              //when the map is completely load hide the blur effect
-              $("#loader").hide();
-              $("#map").css("filter", "blur(0px)");
-              $("#button").show();
-              $("#totalUnity").show();
-              $(".leaflet-control-zoom").css("visibility", "visible");
-              $(".leaflet-control-layers-toggle").css("visibility", "visible");
-              //Check wich currency of time is selected
-              var selectedTime = $("#current_interval").text();
-              //Change color of text selected
-              switch (selectedTime) {
-                case "Last week":
-                  $("#interval_week").css("background-color", "#1F3549") &&
-                    $("#interval_week").css("color", "white") &&
-                    $("#interval_week").css("margin-top", "-5px");
-                  break;
-                case "Last month":
-                  $("#interval_month").css("background-color", "#1F3549") &&
-                    $("#interval_month").css("color", "white");
-                  break;
-                case "Last 6 months":
-                  $("#interval_6months").css("background-color", "#1F3549") &&
-                    $("#interval_6months").css("color", "white");
-                  break;
-                case "Last year":
-                  $("#interval_year").css("background-color", "#1F3549") &&
-                    $("#interval_year").css("color", "white") &&
-                    $("#interval_year").css("margin-bottom", "-8px");
-                  break;
-                case "All":
-                  $("#interval_all").css("background-color", "#1F3549") &&
-                    $("#interval_all").css("color", "white") &&
-                    $("#interval_all").css("margin-top", "-8px") &&
-                    $("#interval_all").css("margin-bottom", "-8px") &&
-                    $("#interval_all").css(
-                      "border-bottom-left-radius",
-                      "4px"
-                    ) &&
-                    $("#interval_all").css("border-bottom-right-radius", "4px");
-                  break;
-                default:
-                  break;
-              }
+            for (var i in nethserverInstallations) {
+              //Create all the variable that will be showed in the marker
+              installationsNumber = nethserverInstallations[i].number;
+              versionsInstallation = nethserverInstallations[i].version;
+              countryName = nethserverInstallations[i].countryN;
+              textMarker +=
+                "<tr><td><b>" +
+                versionsInstallation +
+                "</b></td><td><b>" +
+                installationsNumber;
+              ("</b></td></tr>");
+              //Check the total number of the installations
+              totalInstallations += parseInt(installationsNumber);
+            }
+            globalInstallations += totalInstallations;
+            if (totalInstallations >= 1000) {
+              totalInstallations =
+                Math.floor(totalInstallations / 1000).toString() + "K";
+            }
+            marker.options.icon.options.text = totalInstallations;
+            //Show the unity total
+            $("#totalUnity").text(globalInstallations.toString());
+            //Create the marker body
+            content +=
+              '<table class="table  is-hoverable">' +
+              '<thead><tr><th style="background-color: white; color: black; font-size: 12; border-radius:4px; border-color: transparent; " colspan="2";>' +
+              countryName +
+              "</th></tr></thead>" +
+              "<tbody><tr><th>Release</th><th>Installations</th></tr></tbody>" +
+              textMarker +
+              "</table>" +
+              "</div>" +
+              "</div>";
+            var txt = `${content}`;
+            marker.addTo(map).bindPopup(txt);
+            //when the map is completely load hide the blur effect
+            $("#loader").hide();
+            $("#map").css("filter", "blur(0px)");
+            $("#button").show();
+            $("#totalUnity").show();
+            $(".leaflet-control-zoom").css("visibility", "visible");
+            $(".leaflet-control-layers-toggle").css("visibility", "visible");
+            //Check wich currency of time is selected
+            var selectedTime = $("#current_interval").text();
+            //Change color of text selected
+            switch (selectedTime) {
+              case "Last week":
+                $("#interval_week").css("background-color", "#1F3549") &&
+                  $("#interval_week").css("color", "white") &&
+                  $("#interval_week").css("margin-top", "-5px");
+                break;
+              case "Last month":
+                $("#interval_month").css("background-color", "#1F3549") &&
+                  $("#interval_month").css("color", "white");
+                break;
+              case "Last 6 months":
+                $("#interval_6months").css("background-color", "#1F3549") &&
+                  $("#interval_6months").css("color", "white");
+                break;
+              case "Last year":
+                $("#interval_year").css("background-color", "#1F3549") &&
+                  $("#interval_year").css("color", "white") &&
+                  $("#interval_year").css("margin-bottom", "-8px");
+                break;
+              case "All":
+                $("#interval_all").css("background-color", "#1F3549") &&
+                  $("#interval_all").css("color", "white") &&
+                  $("#interval_all").css("margin-top", "-8px") &&
+                  $("#interval_all").css("margin-bottom", "-8px") &&
+                  $("#interval_all").css("border-bottom-left-radius", "4px") &&
+                  $("#interval_all").css("border-bottom-right-radius", "4px");
+                break;
+              default:
+                break;
             }
           }
         }
-      });
-    });
+      }
+    // });
+    // });
   },
   error: function (errResp) {
     console.error(errResp);
